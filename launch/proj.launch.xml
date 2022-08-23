@@ -54,10 +54,12 @@
   <include file="$(find-pkg-share button_manager)/launch/button_manager.launch.xml">
     <arg name="button_name" value="engage_button"/>
     <arg name="port_name" value="din0"/>
+    <arg name="is_publish_while_pressing_button" value="false"/>
   </include>
   <include file="$(find-pkg-share button_manager)/launch/button_manager.launch.xml">
     <arg name="button_name" value="delivery_reservation_button"/>
     <arg name="port_name" value="din1"/>
+    <arg name="is_publish_while_pressing_button" value="true"/>
   </include>
 
   <include file="$(find-pkg-share v2i_interface)/launch/v2i_interface.launch.xml">
@@ -80,4 +82,6 @@
   <include file="$(find-pkg-share autoware_state_machine)/launch/autoware_state_machine.launch.xml">
     <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)"/>
   </include>
+  <include file="$(find-pkg-share button_output_selector)/launch/button_output_selector.launch.xml" />
+  <include file="$(find-pkg-share shutdown_manager)/launch/shutdown_manager.launch.xml" />
 </launch>
