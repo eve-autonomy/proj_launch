@@ -80,4 +80,6 @@
   <include file="$(find-pkg-share autoware_state_machine)/launch/autoware_state_machine.launch.xml">
     <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)"/>
   </include>
+  <include file="$(find-pkg-share button_output_selector)/launch/button_output_selector.launch.xml" />
+  <include file="$(find-pkg-share shutdown_manager)/launch/shutdown_manager.launch.xml" />
 </launch>

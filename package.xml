@@ -37,6 +37,8 @@
   <exec_depend>go_interface</exec_depend>
   <exec_depend>engage_srv_converter</exec_depend>
   <exec_depend>autoware_state_machine</exec_depend>
+  <exec_depend>shutdown_manager</exec_depend>
+  <exec_depend>button_output_selector</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
