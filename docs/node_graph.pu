@@ -42,6 +42,8 @@ rectangle "hmi control function" {
   usecase "/engage_srv_converter" #LightCoral
   usecase "/delivery_reservation_lamp_manager" #LightCoral
   usecase "/warning_lamp_manager" #LightCoral
+  usecase "/button_output_selector" #LightCoral
+  usecase "/shutdown_manager" #LightCoral
 
   usecase "/dio_ros_driver" as (/dio_ros_driver)
 
@@ -85,11 +87,14 @@ rectangle "hmi control function" {
 (/ad_status_lamp_manager) --> (/dio_ros_driver) : /dio/dout0
 
 (/delivery_reservation_button_manager) <-- (/dio_ros_driver): /dio/din1
-(/autoware_state_machine) <-- (/delivery_reservation_button_manager)
+(/button_output_selector) <-- (/delivery_reservation_button_manager)
+(/autoware_state_machine) <- (/button_output_selector)
+(/shutdown_manager) <- (/button_output_selector)
 (/engage_button_manager) <-- (/dio_ros_driver): /dio/din0
 (/engage_srv_converter) <-- (/engage_button_manager)
 
 (/autoware_state_machine) --> (/delivery_reservation_lamp_manager)
+(/shutdown_manager) --> (/delivery_reservation_lamp_manager)
 (/delivery_reservation_lamp_manager) --> (/dio_ros_driver) : /dio/dout3
 
 (/autoware_state_machine) <-- (/engage_srv_converter)
