@@ -39,6 +39,8 @@ Note: This package manages the red colored nodes.
       - [audio_driver_msgs](https://github.com/eve-autonomy/audio_driver_msgs)
   - Reserved-delivery connection:
     - [go_interface](https://github.com/eve-autonomy/go_interface)
+  - Shutdown process management:
+    - [shutdown_manager_msgs](https://github.com/eve-autonomy/shutdown_manager_msgs)
 
 - Parameters
   - Reserved-delivery connection:
