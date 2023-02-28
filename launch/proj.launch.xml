@@ -82,4 +82,11 @@
   </include>
   <include file="$(find-pkg-share button_output_selector)/launch/button_output_selector.launch.xml" />
   <include file="$(find-pkg-share shutdown_manager)/launch/shutdown_manager.launch.xml" />
+  <include file="$(find-pkg-share lanelet2_map_parse_service)/launch/lanelet2_map_parse_service.launch.xml" />
+  <include file="$(find-pkg-share engage_relay_service)/launch/engage_relay_service.launch.py" />
+  <include file="$(find-pkg-share cargo_loading_service)/launch/cargo_loading_service.launch.py" />
+  <include file="$(find-pkg-share in_parking_state_manager)/launch/in_parking_state_manager.launch.xml" />
+  <include file="$(find-pkg-share in_parking_task_manager)/launch/in_parking_task_manager.launch.xml" />
+  <include file="$(find-pkg-share v2i_command_muxer)/launch/v2i_command_muxer.launch.xml" />
+  <include file="$(find-pkg-share vtl_adapter)/launch/vtl_adapter.launch.xml" />
 </launch>
