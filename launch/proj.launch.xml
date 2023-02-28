@@ -26,7 +26,7 @@
   />
   <arg
     name="operation_mode_v2i_infra"
-    default="product"
+    default="$(env OPR_MODE_V2I 'product')"
     description="product, local_test"
   />
   <arg
