@@ -48,45 +48,84 @@
     <push-ros-namespace namespace="sound_voice_alarm"/>
     <include file="$(find-pkg-share audio_driver)/launch/audio_driver.launch.xml" />
   </group>
-
+  <group>
     <include file="$(find-pkg-share dio_ros_driver)/launch/dio_ros_driver.launch.xml" />
+  </group>
 
+  <group>
     <include file="$(find-pkg-share button_manager)/launch/button_manager.launch.xml">
       <arg name="button_name" value="engage_button"/>
       <arg name="port_name" value="din0"/>
     </include>
+  </group>
+  <group>
     <include file="$(find-pkg-share button_manager)/launch/button_manager.launch.xml">
       <arg name="button_name" value="delivery_reservation_button"/>
       <arg name="port_name" value="din1"/>
     </include>
+  </group>
 
+  <group>
     <include file="$(find-pkg-share v2i_interface)/launch/v2i_interface.launch.xml">
       <arg name="operation_mode" value="$(var operation_mode_v2i_infra)" />
     </include>
+  </group>
 
+  <group>
     <include file="$(find-pkg-share warning_lamp_manager)/launch/warning_lamp_manager.launch.xml">
       <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)" />
     </include>
+  </group>
+  <group>
     <include file="$(find-pkg-share ad_status_lamp_manager)/launch/ad_status_lamp_manager.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share ad_sound_manager)/launch/ad_sound_manager.launch.xml">
       <arg name="lang" value="$(var ad_sound_language)"/>
     </include>
+  </group>
+  <group>
     <include file="$(find-pkg-share delivery_reservation_lamp_manager)/launch/delivery_reservation_lamp_manager.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share go_interface)/launch/go_interface.launch.xml">
       <arg name="operation_mode" value="$(var operation_mode_delivery_reservation)" />
       <arg name="access_token" value="$(var access_token_delivery_reservation)" />
     </include>
+  </group>
+  <group>
     <include file="$(find-pkg-share engage_srv_converter)/launch/engage_srv_converter.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share autoware_state_machine)/launch/autoware_state_machine.launch.xml">
       <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)"/>
     </include>
+  </group>
+  <group>
     <include file="$(find-pkg-share button_output_selector)/launch/button_output_selector.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share shutdown_manager)/launch/shutdown_manager.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share lanelet2_map_parse_service)/launch/lanelet2_map_parse_service.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share engage_relay_service)/launch/engage_relay_service.launch.py" />
+  </group>
+  <group>
     <include file="$(find-pkg-share cargo_loading_service)/launch/cargo_loading_service.launch.py" />
+  </group>
+  <group>
     <include file="$(find-pkg-share in_parking_state_manager)/launch/in_parking_state_manager.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share in_parking_task_manager)/launch/in_parking_task_manager.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share v2i_command_muxer)/launch/v2i_command_muxer.launch.xml" />
+  </group>
+  <group>
     <include file="$(find-pkg-share vtl_adapter)/launch/vtl_adapter.launch.xml" />
+  </group>
 </launch>
