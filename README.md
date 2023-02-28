@@ -59,6 +59,7 @@ Note: This package manages the red colored nodes.
 
 |Name|Description|
 |:---|:----------|
+|OPR_MODE_V2I|Select one of the operation modes to the v2i connection `/v2i_interface` from the followings; <br>  `product`, `local_test` <br> This parameter works as [`operation_mode`](https://github.com/eve-autonomy/v2i_interface#launch-arguments).|
 |OPR_MODE_DELY_RSV|Select one of the operation modes to the delivery reserve application `/go_interface`  from the followings; <br>  `product`, `server_test`, `local_test`, `not_use` <br> This parameter works as [`operation_mode`](https://github.com/eve-autonomy/go_interface#launch-arguments).|
 |ACCESS_TOKEN_DELY_RSV|Specify an access token of the reserve application `/go_interface`. This setting is reflected in the value of [`access_token`](https://github.com/eve-autonomy/go_interface#launch-arguments) in go_interface.|
 |AD_SOUND_LANGUAGE|Select a sound language in `ad_sound_manager`. This parameter is same to directory name of the node and works as [`lang`](https://github.com/eve-autonomy/ad_sound_manager#launch-arguments) in ad_sound_manager.|
