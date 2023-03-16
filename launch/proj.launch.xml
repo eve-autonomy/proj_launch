@@ -111,10 +111,10 @@
     <include file="$(find-pkg-share lanelet2_map_parse_service)/launch/lanelet2_map_parse_service.launch.xml" />
   </group>
   <group>
-    <include file="$(find-pkg-share engage_relay_service)/launch/engage_relay_service.launch.py" />
+    <include file="$(find-pkg-share engage_relay_service)/launch/engage_relay_service.launch.xml" />
   </group>
   <group>
-    <include file="$(find-pkg-share cargo_loading_service)/launch/cargo_loading_service.launch.py" />
+    <include file="$(find-pkg-share cargo_loading_service)/launch/cargo_loading_service.launch.xml" />
   </group>
   <group>
     <include file="$(find-pkg-share in_parking_state_manager)/launch/in_parking_state_manager.launch.xml" />
