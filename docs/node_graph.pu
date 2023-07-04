@@ -18,6 +18,9 @@ rectangle "v2i control function" {
     node "v2i infrastructure[n]" as v2ihw_n
   }
 }
+rectangle "cargo loading function"{
+  usecase "cargo_loading_service"
+}
 
 rectangle "ondemand delivery reservation function" {
   rectangle "web.auto" {
@@ -57,6 +60,9 @@ rectangle "hmi control function" {
     node "delivery_reservation_button"
   }
 }
+
+(cargo_loading_service) -> (/v2i_interface) : /cargo_loding/infrastructure_commands
+(cargo_loading_service) <- (/v2i_interface) :/v2i/infrastructer_states
 
 (/v2i_interface) -[hidden] (/ad_sound_manager)
 (/engage_srv_converter) -[hidden] (/v2i_interface)
@@ -98,9 +104,9 @@ rectangle "hmi control function" {
 (/delivery_reservation_lamp_manager) --> (/dio_ros_driver) : /dio/dout3
 
 (/autoware_state_machine) <-- (/engage_srv_converter)
-(/autoware_state_machine) --> (/engage_srv_converter) 
+(/autoware_state_machine) --> (/engage_srv_converter)
 (/control/vehicle_cmd_gate) <-- (/autoware_state_machine) : /api/autoware/set/engage\n /api/autoware/set/start_request
-(/control/vehicle_cmd_gate) --> (/autoware_state_machine) 
+(/control/vehicle_cmd_gate) --> (/autoware_state_machine)
 
 (/awapi/awapi_awiv_adapter_node) -[hidden] (/control/vehicle_cmd_gate)
 (/awapi/awapi_awiv_adapter_node) --> (/ad_sound_manager) : /awapi/vehicle/get/status
