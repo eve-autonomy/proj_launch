@@ -19,6 +19,10 @@ rectangle "v2i control function" {
   }
 }
 
+rectangle "cargo loading function"{
+  usecase "cargo_loading_service"
+}
+
 rectangle "ondemand delivery reservation function" {
   rectangle "web.auto" {
     cloud "FMS (Fleet management system)" as FMS
@@ -57,6 +61,9 @@ rectangle "hmi control function" {
     node "delivery_reservation_button"
   }
 }
+
+(cargo_loading_service) -> (/v2i_interface) : /cargo_loding/infrastructure_commands
+(cargo_loading_service) <- (/v2i_interface) :/v2i/infrastructer_states
 
 (/v2i_interface) -[hidden] (/ad_sound_manager)
 (/engage_srv_converter) -[hidden] (/v2i_interface)
