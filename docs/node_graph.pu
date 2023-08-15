@@ -19,8 +19,18 @@ rectangle "v2i control function" {
   }
 }
 
+rectangle "in_parking Module" {
+    usecase "in_parking_state_manager"
+    usecase "in_parking_task_manager"
+    usecase "lanelet2_map_parse_service"
+}
+
+rectangle "engage service"{
+    usecase "engage_relay_service"
+}
+
 rectangle "cargo loading function"{
-  usecase "cargo_loading_service"
+  usecase "cargo_loading_service"  #LightCoral
 }
 
 rectangle "ondemand delivery reservation function" {
@@ -62,8 +72,16 @@ rectangle "hmi control function" {
   }
 }
 
+(cargo_loading_service) <-- (in_parking_state_manager) :/in_parking/state
+(cargo_loading_service) -> (in_parking_task_manager)
+(cargo_loading_service) <- (in_parking_task_manager) :/in_parking/task
+ (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service
+ (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service/is_ready
 (cargo_loading_service) -> (/v2i_interface) : /cargo_loding/infrastructure_commands
 (cargo_loading_service) <- (/v2i_interface) :/v2i/infrastructer_states
+
+(in_parking_state_manager) --> (engage_relay_service) : /in_parkinge/set/auto_engage
+(engage_relay_service) ----> (/autoware_state_machine) : /api/external/set/engage
 
 (/v2i_interface) -[hidden] (/ad_sound_manager)
 (/engage_srv_converter) -[hidden] (/v2i_interface)
