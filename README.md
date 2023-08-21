@@ -23,7 +23,7 @@ Note: This package manages the red colored nodes.
     - Button control:
       - [/button_manager](https://github.com/eve-autonomy/button_manager)
       - [/engage_srv_converter](https://github.com/eve-autonomy/engage_srv_converter)
-      - [/button_output_selector](https://github.com/eve-autonomy/button_output_selector)  
+      - [/button_output_selector](https://github.com/eve-autonomy/button_output_selector)
   - Reserved-delivery connection:
     - [/go_interface](https://github.com/eve-autonomy/go_interface)
   - V2I connection:
