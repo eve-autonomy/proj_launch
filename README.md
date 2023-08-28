@@ -11,6 +11,7 @@ Note: This package manages the red colored nodes.
 - Nodes
   - State management:
     - [/autoware_state_machine](https://github.com/eve-autonomy/autoware_state_machine)
+    - [/engage_service](https://github.com/tier4/engage_service)
   - HMI control:
     - Sound control:
       - [/ad_sound_manager](https://github.com/eve-autonomy/ad_sound_manager)
@@ -32,7 +33,9 @@ Note: This package manages the red colored nodes.
     - [/shutdown_manager](https://github.com/eve-autonomy/shutdown_manager)
   - Cargo Loading management:
     - [/cargo_loading_service](https://github.com/eve-autonomy/cargo_loading_service)
-
+  - Parking task management:
+    - [/in_parking_task_manager](https://github.com/tier4/in_parking_task_manager)
+    - [/lanelet2_map_parse_service](https://github.com/tier4/lanelet2_map_parse_service)
 - Message definition
   - State management:
     - [autoware_state_machine_msgs](https://github.com/eve-autonomy/autoware_state_machine_msgs)
@@ -43,6 +46,8 @@ Note: This package manages the red colored nodes.
     - [go_interface](https://github.com/eve-autonomy/go_interface)
   - Shutdown process management:
     - [shutdown_manager_msgs](https://github.com/eve-autonomy/shutdown_manager_msgs)
+  - Parking task management:
+    - [in_parking_msgs](https://github.com/tier4/in_parking_msgs)
 
 - Parameters
   - Reserved-delivery connection:
