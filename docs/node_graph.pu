@@ -6,6 +6,8 @@ rectangle "autoware" {
 
 rectangle "v2i control function" {
   usecase "/v2i_interface" #LightCoral
+  usecase "/vtl_adapter" #LightCoral
+  usecase "/vtl_command_muxer" #LightCoral
   rectangle "user-defined/in-vehicle infrastructure device" {
     node "broadcasting device"
   }
@@ -80,8 +82,10 @@ rectangle "hmi control function" {
 (cargo_loading_service) <--u- (in_parking_task_manager) :/in_parking/task
 (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service
 (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service/is_ready
-(cargo_loading_service) -> (/v2i_interface) : /cargo_loding/infrastructure_commands
-(cargo_loading_service) <- (/v2i_interface) :/v2i/infrastructer_states
+(/vtl_adapter) <- (/v2i_interface) : /v2i/infrastructer_states
+(cargo_loading_service) -> (/vtl_command_muxer) : /cargo_loding/infrastructure_commands
+(/vtl_command_muxer) -> (/v2i_interface) : /v2i/infrastructer_commands
+(/v2i_interface) -> (cargo_loading_service) : /v2i/infrastructer_states
 
 (in_parking_state_manager) --> (engage_relay_service) : /in_parkinge/set/auto_engage
 (engage_relay_service) -> (/autoware_state_machine) : /api/external/set/engage
@@ -98,11 +102,12 @@ rectangle "hmi control function" {
 (/warning_lamp_manager) ---[hidden] (warning_lamp)
 (/ad_sound_manager) --[hidden] (speaker)
 
-(/awapi/awapi_awiv_adapter_node) --> (/v2i_interface) : /awapi/tmp/infrastructure_commands
-(/awapi/awapi_awiv_adapter_node) <-- (/v2i_interface) : /system/v2x/virtual_traffic_light_states
+(/v2i_interface) <- (/awapi/awapi_awiv_adapter_node)  : /awapi/tmp/infrastructure_commands
+(/v2i_interface) -> (/awapi/awapi_awiv_adapter_node)  : /system/v2x/virtual_traffic_light_states
 (/v2i_interface) --> (broadcasting device) : v2i command\n(UDP)
 (/v2i_interface) <-- (broadcasting device) : v2i status\n(UDP)
-(/v2i_interface) <--- (/autoware_state_machine)
+(/vtl_command_muxer) <- (/vtl_adapter) : /v2i_gate/infrastructure_commands
+(/vtl_adapter) <- (/autoware_state_machine)
 
 (broadcasting device) --> (v2ictl_0)
 (broadcasting device) <-- (v2ictl_0)
