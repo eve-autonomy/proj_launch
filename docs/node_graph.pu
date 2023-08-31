@@ -7,7 +7,7 @@ rectangle "autoware" {
 rectangle "v2i control function" {
   usecase "/v2i_interface" #LightCoral
   usecase "/vtl_adapter" #LightCoral
-  usecase "/vtl_command_muxer" #LightCoral
+  usecase "/v2i_command_muxer" #LightCoral
   rectangle "user-defined/in-vehicle infrastructure device" {
     node "broadcasting device"
   }
@@ -28,7 +28,7 @@ rectangle "in_parking function" {
 }
 
 rectangle "engage function"{
-    usecase "engage_relay_service"
+    usecase "engage_relay_service"  #LightCoral
     usecase "/autoware_state_machine" #LightCoral
 }
 
@@ -47,21 +47,28 @@ rectangle "ondemand delivery reservation function" {
   usecase "/go_interface" #LightCoral
 }
 
+rectangle "Shutdown process management" {
+    usecase "/shutdown_manager" #LightCoral
+}
 
 rectangle "hmi control function" {
-  usecase "/ad_sound_manager" #LightCoral
-  usecase "/sound_voice_alarm/audio_driver" #LightCoral
-  usecase "/sound_bgm/audio_driver" #LightCoral
-  usecase "/ad_status_lamp_manager" #LightCoral
-  usecase "/engage_button_manager" #LightCoral
-  usecase "/delivery_reservation_button_manager" #LightCoral
-  usecase "/engage_srv_converter" #LightCoral
-  usecase "/delivery_reservation_lamp_manager" #LightCoral
-  usecase "/warning_lamp_manager" #LightCoral
-  usecase "/button_output_selector" #LightCoral
-  usecase "/shutdown_manager" #LightCoral
-
-  usecase "/dio_ros_driver" as (/dio_ros_driver)
+  rectangle "Sound control" {
+    usecase "/ad_sound_manager" #LightCoral
+    usecase "/sound_voice_alarm/audio_driver" #LightCoral
+    usecase "/sound_bgm/audio_driver" #LightCoral
+  }
+  rectangle "Lamp control" {
+    usecase "/ad_status_lamp_manager" #LightCoral
+    usecase "/warning_lamp_manager" #LightCoral
+    usecase "/delivery_reservation_lamp_manager" #LightCoral
+  }
+  rectangle "Button control" {
+    usecase "/engage_button_manager" #LightCoral
+    usecase "/engage_srv_converter" #LightCoral
+    usecase "/button_output_selector" #LightCoral
+    usecase "/delivery_reservation_button_manager" #LightCoral
+  }
+  usecase "/dio_ros_driver" as (/dio_ros_driver) #LightCoral
 
   rectangle "user-defined/in-vehicle HMI devices" {
     node "speaker"
@@ -83,8 +90,8 @@ rectangle "hmi control function" {
 (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service
 (in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service/is_ready
 (/vtl_adapter) <- (/v2i_interface) : /v2i/infrastructer_states
-(cargo_loading_service) -> (/vtl_command_muxer) : /cargo_loding/infrastructure_commands
-(/vtl_command_muxer) -> (/v2i_interface) : /v2i/infrastructer_commands
+(cargo_loading_service) -> (/v2i_command_muxer) : /cargo_loding/infrastructure_commands
+(/v2i_command_muxer) -> (/v2i_interface) : /v2i/infrastructer_commands
 (/v2i_interface) -> (cargo_loading_service) : /v2i/infrastructer_states
 
 (in_parking_state_manager) --> (engage_relay_service) : /in_parkinge/set/auto_engage
@@ -106,7 +113,7 @@ rectangle "hmi control function" {
 (/v2i_interface) -> (/awapi/awapi_awiv_adapter_node)  : /system/v2x/virtual_traffic_light_states
 (/v2i_interface) --> (broadcasting device) : v2i command\n(UDP)
 (/v2i_interface) <-- (broadcasting device) : v2i status\n(UDP)
-(/vtl_command_muxer) <- (/vtl_adapter) : /v2i_gate/infrastructure_commands
+(/v2i_command_muxer) <- (/vtl_adapter) : /v2i_gate/infrastructure_commands
 (/vtl_adapter) <- (/autoware_state_machine)
 
 (broadcasting device) --> (v2ictl_0)
@@ -122,12 +129,12 @@ rectangle "hmi control function" {
 (/delivery_reservation_button_manager) <-- (/dio_ros_driver): /dio/din1
 (/button_output_selector) <-- (/delivery_reservation_button_manager)
 (/autoware_state_machine) <- (/button_output_selector)
-(/shutdown_manager) <- (/button_output_selector)
+(/shutdown_manager) <-d- (/button_output_selector)
 (/engage_button_manager) <-- (/dio_ros_driver): /dio/din0
 (/engage_srv_converter) <-- (/engage_button_manager)
 
 (/autoware_state_machine) --> (/delivery_reservation_lamp_manager)
-(/shutdown_manager) --> (/delivery_reservation_lamp_manager)
+(/shutdown_manager) -d-> (/delivery_reservation_lamp_manager)
 (/delivery_reservation_lamp_manager) --> (/dio_ros_driver) : /dio/dout3
 
 (/autoware_state_machine) <-- (/engage_srv_converter)
