@@ -23,6 +23,7 @@ Note: This package manages the red colored nodes.
       - [/warning_lamp_manager](https://github.com/eve-autonomy/warning_lamp_manager)
     - Button control:
       - [/button_manager](https://github.com/eve-autonomy/button_manager)
+      - [dio_ros_driver](https://github.com/tier4/dio_ros_driver)
       - [/engage_srv_converter](https://github.com/eve-autonomy/engage_srv_converter)
       - [/button_output_selector](https://github.com/eve-autonomy/button_output_selector)
   - Reserved-delivery connection:
@@ -33,9 +34,12 @@ Note: This package manages the red colored nodes.
     - [/shutdown_manager](https://github.com/eve-autonomy/shutdown_manager)
   - Cargo Loading management:
     - [/cargo_loading_service](https://github.com/eve-autonomy/cargo_loading_service)
+    - [diagnostics](https://github.com/tier4/diagnostics)
+    - [interface_utils](https://github.com/tier4/interface_utils)
   - Parking task management:
     - [/in_parking_task_manager](https://github.com/tier4/in_parking_task_manager)
     - [/lanelet2_map_parse_service](https://github.com/tier4/lanelet2_map_parse_service)
+    
 - Message definition
   - State management:
     - [autoware_state_machine_msgs](https://github.com/eve-autonomy/autoware_state_machine_msgs)
@@ -48,6 +52,10 @@ Note: This package manages the red colored nodes.
     - [shutdown_manager_msgs](https://github.com/eve-autonomy/shutdown_manager_msgs)
   - Parking task management:
     - [in_parking_msgs](https://github.com/tier4/in_parking_msgs)
+    - [lanelet2_parse_msgs](https://github.com/tier4/lanelet2_parse_msgs)
+    - [tier4_autoware_msgs](https://github.com/tier4/tier4_autoware_msgs)
+  - V2I connection:
+    - [v2i_interface_msgs](https://github.com/eve-autonomy/v2i_interface_msgs)
 
 - Parameters
   - Reserved-delivery connection:
@@ -59,6 +67,10 @@ Note: This package manages the red colored nodes.
   - HMI control:
     - Sound control:
       - [ad_sound.default](https://github.com/eve-autonomy/ad_sound.default)
+
+- Library
+ - [/autoware_common](https://github.com/autowarefoundation/autoware_common) 
+ 
 
 </div></details>
 
