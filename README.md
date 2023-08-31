@@ -42,9 +42,6 @@ Note: This package manages the red colored nodes.
 - Message definition
   - Engage:
     - [tier4_external_api_msgs](https://github.com/tier4/tier4_autoware_msgs)
-    - [tier4_system_msgs](https://github.com/tier4/tier4_autoware_msgs)
-    - [tier4_planning_msgs](https://github.com/tier4/tier4_autoware_msgs)
-    - [tier4_vehicle_msgs](https://github.com/tier4/tier4_autoware_msgs)
     - [autoware_state_machine_msgs](https://github.com/eve-autonomy/autoware_state_machine_msgs)
   - HMI control:
     - Sound control:
@@ -56,12 +53,16 @@ Note: This package manages the red colored nodes.
   - In-parking task management:
     - [in_parking_msgs](https://github.com/tier4/in_parking_msgs)
     - [lanelet2_parse_msgs](https://github.com/tier4/lanelet2_parse_msgs)
-    - [tier4_api_msgs](https://github.com/tier4/tier4_autoware_msgs)
-    - [tier4_external_api_msgs](https://github.com/tier4/tier4_autoware_msgs)
     - [autoware_auto_mapping_msgs](https://github.com/tier4/autoware_auto_msgs)
   - V2I control:
     - [v2i_interface_msgs](https://github.com/eve-autonomy/v2i_interface_msgs)
     - [tier4_v2x_msgs](https://github.com/tier4/tier4_autoware_msgs)
+  - Base:
+    - [tier4_api_msgs](https://github.com/tier4/tier4_autoware_msgs)
+    - [tier4_system_msgs](https://github.com/tier4/tier4_autoware_msgs)
+    - [tier4_planning_msgs](https://github.com/tier4/tier4_autoware_msgs)
+    - [tier4_vehicle_msgs](https://github.com/tier4/tier4_autoware_msgs)
+
 - Parameters
   - Ondemand delivery reservation:
     - [go_interface_params.default](https://github.com/eve-autonomy/go_interface_params.default)
