@@ -21,7 +21,7 @@ rectangle "v2i control function" {
   }
 }
 
-rectangle "in_parking function" {
+rectangle "in-parking task function" {
     usecase "in_parking_state_manager" #LightCoral
     usecase "in_parking_task_manager" #LightCoral
     usecase "lanelet2_map_parse_service" #LightCoral
