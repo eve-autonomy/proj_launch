@@ -54,6 +54,7 @@ Note: This package manages the red colored nodes.
     - [in_parking_msgs](https://github.com/tier4/in_parking_msgs)
     - [lanelet2_parse_msgs](https://github.com/tier4/lanelet2_parse_msgs)
     - [tier4_autoware_msgs](https://github.com/tier4/tier4_autoware_msgs)
+    - [autoware_auto_msgs](https://github.com/tier4/autoware_auto_msgs)
   - V2I connection:
     - [v2i_interface_msgs](https://github.com/eve-autonomy/v2i_interface_msgs)
 
