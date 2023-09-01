@@ -21,7 +21,7 @@ rectangle "v2i control function" {
   }
 }
 
-rectangle "in-parking task function" {
+rectangle "in-parking task management function" {
     usecase "in_parking_state_manager" #LightCoral
     usecase "in_parking_task_manager" #LightCoral
     usecase "lanelet2_map_parse_service" #LightCoral
@@ -32,7 +32,7 @@ rectangle "engage function"{
     usecase "/autoware_state_machine" #LightCoral
 }
 
-rectangle "cargo loading function"{
+rectangle "cargo loading management function"{
   usecase "cargo_loading_service"  #LightCoral
 }
 
@@ -47,22 +47,22 @@ rectangle "ondemand delivery reservation function" {
   usecase "/go_interface" #LightCoral
 }
 
-rectangle "Shutdown process management" {
+rectangle "Shutdown process management function" {
     usecase "/shutdown_manager" #LightCoral
 }
 
 rectangle "hmi control function" {
-  rectangle "Sound control" {
+  rectangle "Sound control function" {
     usecase "/ad_sound_manager" #LightCoral
     usecase "/sound_voice_alarm/audio_driver" #LightCoral
     usecase "/sound_bgm/audio_driver" #LightCoral
   }
-  rectangle "Lamp control" {
+  rectangle "Lamp control function" {
     usecase "/ad_status_lamp_manager" #LightCoral
     usecase "/warning_lamp_manager" #LightCoral
     usecase "/delivery_reservation_lamp_manager" #LightCoral
   }
-  rectangle "Button control" {
+  rectangle "Button control function" {
     usecase "/engage_button_manager" #LightCoral
     usecase "/engage_srv_converter" #LightCoral
     usecase "/button_output_selector" #LightCoral
@@ -94,7 +94,7 @@ rectangle "hmi control function" {
 (/v2i_command_muxer) -> (/v2i_interface) : /v2i/infrastructer_commands
 (/v2i_interface) -> (cargo_loading_service) : /v2i/infrastructer_states
 
-(in_parking_state_manager) --> (engage_relay_service) : /in_parkinge/set/auto_engage
+(in_parking_state_manager) -> (engage_relay_service) : \n/in_parkinge/set/auto_engage
 (engage_relay_service) -> (/autoware_state_machine) : /api/external/set/engage
 
 (/v2i_interface) -[hidden] (/ad_sound_manager)
@@ -109,7 +109,7 @@ rectangle "hmi control function" {
 (/warning_lamp_manager) ---[hidden] (warning_lamp)
 (/ad_sound_manager) --[hidden] (speaker)
 
-(/v2i_interface) <- (/awapi/awapi_awiv_adapter_node)  : /awapi/tmp/infrastructure_commands
+(/v2i_interface) <-- (/awapi/awapi_awiv_adapter_node)  : \n/awapi/tmp/infrastructure_commands
 (/v2i_interface) -> (/awapi/awapi_awiv_adapter_node)  : /system/v2x/virtual_traffic_light_states
 (/v2i_interface) --> (broadcasting device) : v2i command\n(UDP)
 (/v2i_interface) <-- (broadcasting device) : v2i status\n(UDP)

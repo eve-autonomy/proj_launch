@@ -32,7 +32,7 @@ Note: This package manages the red colored nodes.
     - [/v2i_interface](https://github.com/eve-autonomy/v2i_interface)
   - Shutdown process management:
     - [/shutdown_manager](https://github.com/eve-autonomy/shutdown_manager)
-  - Cargo Loading management:
+  - Cargo loading management:
     - [/cargo_loading_service](https://github.com/eve-autonomy/cargo_loading_service)
   - In-parking task management:
     - [/in_parking_task_manager](https://github.com/tier4/in_parking_task_manager)
