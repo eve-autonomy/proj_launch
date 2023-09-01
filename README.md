@@ -6,7 +6,7 @@ This package manages in-vehicle nodes especially for state management, HMI contr
 ## Node Graph
 ![node graph](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/eve-autonomy/proj_launch/main/docs/node_graph.pu)<br>
 Note: This package manages the red colored nodes.
-<details><summary>List of 参照 repositories</summary><div>
+<details><summary>List of reference repositories</summary><div>
 
 - Function
   - Engage:
