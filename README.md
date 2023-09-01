@@ -57,7 +57,7 @@ Note: This package manages the red colored nodes.
   - V2I control:
     - [v2i_interface_msgs](https://github.com/eve-autonomy/v2i_interface_msgs)
     - [tier4_v2x_msgs](https://github.com/tier4/tier4_autoware_msgs)
-  - Base:
+  - Message type used within other message:
     - [tier4_api_msgs](https://github.com/tier4/tier4_autoware_msgs)
     - [tier4_system_msgs](https://github.com/tier4/tier4_autoware_msgs)
     - [tier4_planning_msgs](https://github.com/tier4/tier4_autoware_msgs)
