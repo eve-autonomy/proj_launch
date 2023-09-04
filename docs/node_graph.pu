@@ -81,8 +81,8 @@ rectangle "hmi control function" {
   }
 }
 
-(/autoware_state_machine) -> (/go_interface)
-(/autoware_state_machine) <- (/go_interface)
+(/autoware_state_machine) --> (/go_interface)
+(/autoware_state_machine) <-- (/go_interface)
 
 (cargo_loading_service) <-u-- (in_parking_state_manager) :/in_parking/state
 (cargo_loading_service) -u-> (in_parking_task_manager)
