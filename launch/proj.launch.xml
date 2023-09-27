@@ -128,4 +128,7 @@
   <group>
     <include file="$(find-pkg-share vtl_adapter)/launch/vtl_adapter.launch.xml" />
   </group>
+  <group>
+    <include file="$(find-pkg-share emergency_holding_cancellation)/launch/emergency_holding_cancellation.launch.xml" />
+  </group>
 </launch>
