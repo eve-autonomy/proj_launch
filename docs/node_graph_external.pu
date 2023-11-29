@@ -1,0 +1,145 @@
+@startuml
+rectangle "autoware" {
+  usecase "/awapi/awapi_awiv_adapter_node"
+  usecase "/control/vehicle_cmd_gate"
+}
+
+rectangle "v2i control function" {
+  usecase "/v2i_interface_module" #LightCoral
+}
+rectangle "user-defined/in-vehicle infrastructure device" {
+    node "broadcasting device"
+}
+rectangle "user-defined/infrastructure" {
+    node "v2i controller[0]" as v2ictl_0
+    node "v2i controller[1]" as v2ictl_1
+    node "v2i controller[n]" as v2ictl_n
+    node "v2i infrastructure[0]" as v2ihw_0
+    node "v2i infrastructure[1]" as v2ihw_1
+    node "v2i infrastructure[n]" as v2ihw_n
+}
+
+rectangle "in-parking function" {
+    usecase "in_parking_module" #LightCoral
+}
+
+rectangle "engage function"{
+    usecase "engage_relay_service"  #LightCoral
+    usecase "/autoware_state_machine" #LightCoral
+}
+
+rectangle "cargo loading management function"{
+  usecase "cargo_loading_service"  #LightCoral
+}
+
+rectangle "ondemand delivery reservation function" {
+  rectangle "web.auto" {
+    cloud "FMS (Fleet management system)" as FMS
+    usecase "Agent (Interface for FMS)" as Agent
+  }
+  rectangle "user-defined/saas" {
+    cloud "on-demand delivery apps" as DeliveryApp
+  }
+  usecase "/go_interface" #LightCoral
+}
+
+rectangle "Shutdown process management function" {
+    usecase "/shutdown_manager" #LightCoral
+}
+
+rectangle "hmi control function" {
+  rectangle "Sound control function" {
+    usecase "/Sound_control_module" #LightCoral
+  }
+  rectangle "Lamp control function" {
+    usecase "/lamp_control_module" #LightCoral
+  }
+  rectangle "Button control function" {
+    usecase "/button_control_module" #LightCoral
+  }
+  usecase "/dio_ros_driver" as (/dio_ros_driver) #LightCoral
+
+  rectangle "user-defined/in-vehicle HMI devices" {
+    node "speaker"
+    node "ad_status_lamp"
+    node "warning_lamp"
+    node "emergency_lamp"
+    node "delivery_reservation_lamp"
+    node "engage_button"
+    node "delivery_reservation_button"
+  }
+}
+
+(broadcasting device) <-- (/v2i_interface_module) : v2i command\n(UDP)
+(broadcasting device) --> (/v2i_interface_module) : v2i status\n(UDP)
+
+
+(/autoware_state_machine) -> (/go_interface) : req_change_lock_flg
+(/autoware_state_machine) <-- (/go_interface) : api_vehicle_status
+
+(cargo_loading_service) <-- (in_parking_module) : /in_parking/state\nSrvice:/in_parking/task
+(cargo_loading_service) .-> (in_parking_module)
+(cargo_loading_service) --> (/v2i_interface_module) : /cargo_loding/infrastructure_commands
+(/v2i_interface_module) --> (cargo_loading_service) : /v2i/infrastructer_states
+
+(in_parking_module) --> (engage_relay_service) : /in_parkinge/set/auto_engage
+(/autoware_state_machine) <-u- (engage_relay_service) : /api/external/set/engage
+
+(/v2i_interface_module) <- (/awapi/awapi_awiv_adapter_node)  : /awapi/tmp/infrastructure_commands
+(/v2i_interface_module) -> (/awapi/awapi_awiv_adapter_node)  : /system/v2x/virtual_traffic_light_states
+(/v2i_interface_module) <--- (/autoware_state_machine) : /autoware_state_machine/state
+
+(broadcasting device) --> (v2ictl_0)
+(broadcasting device) <-- (v2ictl_0)
+(broadcasting device) --> (v2ictl_1)
+(broadcasting device) <-- (v2ictl_1)
+(broadcasting device) --> (v2ictl_n)
+(broadcasting device) <-- (v2ictl_n) : wireless communication
+
+(/button_control_module) <-- (/dio_ros_driver) : /dio/din[0-7]
+(/autoware_state_machine) <--- (/button_control_module) : (button_name)_manager/output/(button_name)
+(/lamp_control_module) <-left- (/shutdown_manager) : /shutdown_manager/state
+
+(/button_control_module) -left-> (/shutdown_manager) : /shutdown_button
+(/lamp_control_module) --> (/dio_ros_driver) : /dio/dout0
+
+(/control/vehicle_cmd_gate) <-- (/autoware_state_machine) : Service:\n/api/autoware/set/engage\n/api/autoware/set/start_request
+(/control/vehicle_cmd_gate) -.> (/autoware_state_machine) 
+
+
+(/awapi/awapi_awiv_adapter_node) --> (/Sound_control_module) : /awapi/vehicle/get/status
+(/autoware_state_machine) ---> (/Sound_control_module)
+(/Sound_control_module) --> (speaker)
+
+(FMS) -> (DeliveryApp)
+(FMS) <- (DeliveryApp)
+(FMS) --> (Agent)
+(FMS) <-- (Agent)
+(Agent) -> (/go_interface) : /webauto/vehicle_info
+(DeliveryApp) -->  (/go_interface) : result of GET API
+(DeliveryApp) <-- (/go_interface) : request of GET API\nrequest of PATCH API
+
+(broadcasting device) -[hidden] (v2ictl_1)
+(v2ictl_0) -[hidden] (v2ictl_1)
+(v2ictl_1) -[hidden] (v2ictl_n)
+
+
+(v2ictl_0) --> (v2ihw_0)
+(v2ictl_0) <-- (v2ihw_0)
+(v2ictl_1) --> (v2ihw_1)
+(v2ictl_1) <-- (v2ihw_1)
+(v2ictl_n) --> (v2ihw_n)
+(v2ictl_n) <-- (v2ihw_n) : GPIO communication
+
+(/autoware_state_machine) --> (/lamp_control_module) : /autoware_state_machine/state
+
+(/dio_ros_driver) --> (ad_status_lamp)
+(/dio_ros_driver) --> (warning_lamp)
+(/dio_ros_driver) --> (emergency_lamp)
+(/dio_ros_driver) --> (delivery_reservation_lamp)
+(/dio_ros_driver) <-- (engage_button)
+(/dio_ros_driver) <-- (delivery_reservation_button)
+
+(/awapi/awapi_awiv_adapter_node) --> (/autoware_state_machine) : /awapi/autoware/get/status\n/awapi/vehicle/get/status
+
+@enduml
