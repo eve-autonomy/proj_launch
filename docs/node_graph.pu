@@ -6,6 +6,8 @@ rectangle "autoware" {
 
 rectangle "v2i control function" {
   usecase "/v2i_interface" #LightCoral
+  usecase "/vtl_adapter" #LightCoral
+  usecase "/v2i_command_muxer" #LightCoral
   rectangle "user-defined/in-vehicle infrastructure device" {
     node "broadcasting device"
   }
@@ -19,6 +21,21 @@ rectangle "v2i control function" {
   }
 }
 
+rectangle "in-parking task management function" {
+    usecase "in_parking_state_manager" #LightCoral
+    usecase "in_parking_task_manager" #LightCoral
+    usecase "lanelet2_map_parse_service" #LightCoral
+}
+
+rectangle "engage function"{
+    usecase "engage_relay_service"  #LightCoral
+    usecase "/autoware_state_machine" #LightCoral
+}
+
+rectangle "cargo loading management function"{
+  usecase "cargo_loading_service"  #LightCoral
+}
+
 rectangle "ondemand delivery reservation function" {
   rectangle "web.auto" {
     cloud "FMS (Fleet management system)" as FMS
@@ -30,22 +47,28 @@ rectangle "ondemand delivery reservation function" {
   usecase "/go_interface" #LightCoral
 }
 
-usecase "/autoware_state_machine" #LightCoral
+rectangle "Shutdown process management function" {
+    usecase "/shutdown_manager" #LightCoral
+}
 
 rectangle "hmi control function" {
-  usecase "/ad_sound_manager" #LightCoral
-  usecase "/sound_voice_alarm/audio_driver" #LightCoral
-  usecase "/sound_bgm/audio_driver" #LightCoral
-  usecase "/ad_status_lamp_manager" #LightCoral
-  usecase "/engage_button_manager" #LightCoral
-  usecase "/delivery_reservation_button_manager" #LightCoral
-  usecase "/engage_srv_converter" #LightCoral
-  usecase "/delivery_reservation_lamp_manager" #LightCoral
-  usecase "/warning_lamp_manager" #LightCoral
-  usecase "/button_output_selector" #LightCoral
-  usecase "/shutdown_manager" #LightCoral
-
-  usecase "/dio_ros_driver" as (/dio_ros_driver)
+  rectangle "Sound control function" {
+    usecase "/ad_sound_manager" #LightCoral
+    usecase "/sound_voice_alarm/audio_driver" #LightCoral
+    usecase "/sound_bgm/audio_driver" #LightCoral
+  }
+  rectangle "Lamp control function" {
+    usecase "/ad_status_lamp_manager" #LightCoral
+    usecase "/warning_lamp_manager" #LightCoral
+    usecase "/delivery_reservation_lamp_manager" #LightCoral
+  }
+  rectangle "Button control function" {
+    usecase "/engage_button_manager" #LightCoral
+    usecase "/engage_srv_converter" #LightCoral
+    usecase "/button_output_selector" #LightCoral
+    usecase "/delivery_reservation_button_manager" #LightCoral
+  }
+  usecase "/dio_ros_driver" as (/dio_ros_driver) #LightCoral
 
   rectangle "user-defined/in-vehicle HMI devices" {
     node "speaker"
@@ -57,6 +80,22 @@ rectangle "hmi control function" {
     node "delivery_reservation_button"
   }
 }
+
+(/autoware_state_machine) --> (/go_interface)
+(/autoware_state_machine) <-- (/go_interface)
+
+(cargo_loading_service) <-u-- (in_parking_state_manager) :/in_parking/state
+(cargo_loading_service) -u-> (in_parking_task_manager)
+(cargo_loading_service) <--- (in_parking_task_manager) :/in_parking/task
+(in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service
+(in_parking_task_manager) <- (lanelet2_map_parse_service) : /lanelet2_map_parse_service/is_ready
+(/vtl_adapter) <-d- (/v2i_interface) : /v2i/infrastructer_states
+(cargo_loading_service) -> (/v2i_command_muxer) : /cargo_loding/infrastructure_commands
+(/v2i_command_muxer) -> (/v2i_interface) : /v2i/infrastructer_commands
+(/v2i_interface) -> (cargo_loading_service) : /v2i/infrastructer_states
+
+(in_parking_state_manager) -d---> (engage_relay_service) : \n\n\n\n\n/in_parkinge/set/auto_engage
+(/autoware_state_machine) <-u- (engage_relay_service) : /api/external/set/engage
 
 (/v2i_interface) -[hidden] (/ad_sound_manager)
 (/engage_srv_converter) -[hidden] (/v2i_interface)
@@ -70,11 +109,12 @@ rectangle "hmi control function" {
 (/warning_lamp_manager) ---[hidden] (warning_lamp)
 (/ad_sound_manager) --[hidden] (speaker)
 
-(/awapi/awapi_awiv_adapter_node) --> (/v2i_interface) : /awapi/tmp/infrastructure_commands
-(/awapi/awapi_awiv_adapter_node) <-- (/v2i_interface) : /system/v2x/virtual_traffic_light_states
+(/v2i_interface) <-r- (/awapi/awapi_awiv_adapter_node)  : \n/awapi/tmp/infrastructure_commands
+(/v2i_interface) -r-> (/awapi/awapi_awiv_adapter_node)  : \n\n\n/system/v2x/virtual_traffic_light_states
 (/v2i_interface) --> (broadcasting device) : v2i command\n(UDP)
 (/v2i_interface) <-- (broadcasting device) : v2i status\n(UDP)
-(/v2i_interface) <--- (/autoware_state_machine)
+(/v2i_command_muxer) <- (/vtl_adapter) : \n\n/v2i_gate/infrastructure_commands
+(/vtl_adapter) <- (/autoware_state_machine)
 
 (broadcasting device) --> (v2ictl_0)
 (broadcasting device) <-- (v2ictl_0)
@@ -89,12 +129,12 @@ rectangle "hmi control function" {
 (/delivery_reservation_button_manager) <-- (/dio_ros_driver): /dio/din1
 (/button_output_selector) <-- (/delivery_reservation_button_manager)
 (/autoware_state_machine) <- (/button_output_selector)
-(/shutdown_manager) <- (/button_output_selector)
+(/shutdown_manager) <-d- (/button_output_selector)
 (/engage_button_manager) <-- (/dio_ros_driver): /dio/din0
 (/engage_srv_converter) <-- (/engage_button_manager)
 
 (/autoware_state_machine) --> (/delivery_reservation_lamp_manager)
-(/shutdown_manager) --> (/delivery_reservation_lamp_manager)
+(/shutdown_manager) -d-> (/delivery_reservation_lamp_manager)
 (/delivery_reservation_lamp_manager) --> (/dio_ros_driver) : /dio/dout3
 
 (/autoware_state_machine) <-- (/engage_srv_converter)
@@ -102,7 +142,7 @@ rectangle "hmi control function" {
 (/control/vehicle_cmd_gate) <-- (/autoware_state_machine) : /api/autoware/set/engage\n /api/autoware/set/start_request
 (/control/vehicle_cmd_gate) --> (/autoware_state_machine) 
 
-(/awapi/awapi_awiv_adapter_node) -[hidden] (/control/vehicle_cmd_gate)
+(/awapi/awapi_awiv_adapter_node) -.[hidden] (/control/vehicle_cmd_gate)
 (/awapi/awapi_awiv_adapter_node) --> (/ad_sound_manager) : /awapi/vehicle/get/status
 (/autoware_state_machine) ---> (/ad_sound_manager)
 (/autoware_state_machine) <--- (/ad_sound_manager)
@@ -119,8 +159,6 @@ rectangle "hmi control function" {
 (Agent) -> (/go_interface) : /webauto/vehicle_info
 (DeliveryApp) -->  (/go_interface) : result of GET API
 (DeliveryApp) <-- (/go_interface) : request of GET API\nrequest of PATCH API
-(/autoware_state_machine) -> (/go_interface)
-(/autoware_state_machine) <- (/go_interface)
 
 (broadcasting device) -[hidden] (v2ictl_1)
 (v2ictl_0) -[hidden] (v2ictl_1)
