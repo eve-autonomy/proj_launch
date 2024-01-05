@@ -1,0 +1,96 @@
+@startuml
+rectangle "autoware" {
+  usecase "autonomus module"
+}
+
+rectangle "v2i control function" {
+  usecase "v2i control module" #LightCoral
+}
+rectangle "user-defined/in-vehicle infrastructure device" {
+    node "broadcasting device"
+}
+rectangle "user-defined/infrastructure" {
+    node "v2i controller infrastructure"
+}
+
+rectangle "in-parking function" {
+    usecase "in_parking_module" #LightCoral
+}
+
+rectangle "engage function"{
+    usecase "engage module"  #LightCoral
+}
+
+rectangle "cargo loading management function"{
+  usecase "cargo_loading_service"  #LightCoral
+}
+
+rectangle "ondemand delivery reservation function" {
+  rectangle "web.auto" {
+    cloud "FMS (Fleet management system)" as FMS
+    usecase "Agent (Interface for FMS)" as Agent
+  }
+  rectangle "user-defined/saas" {
+    cloud "on-demand delivery apps" as DeliveryApp
+  }
+  usecase "/go_interface" #LightCoral
+}
+
+rectangle "Shutdown process management function" {
+    usecase "shutdown_manager" #LightCoral
+}
+
+rectangle "hmi control function" {
+  usecase "hmi control module" #LightCoral
+}
+
+  rectangle "user-defined/in-vehicle HMI devices" {
+    node "HMI devices"
+  }
+
+(v2i controller infrastructure) -right-> (broadcasting device) : wireless communication
+(v2i controller infrastructure) <-right- (broadcasting device) : " "
+
+
+
+(broadcasting device) <-- (v2i control module) : v2i command\n(UDP)
+(broadcasting device) --> (v2i control module) : v2i status\n(UDP)
+
+(v2i control module) --> (cargo_loading_service) : /v2i/infrastructer_states
+(v2i control module) <-- (cargo_loading_service) : /cargo_loding/infrastructure_commands
+(v2i control module) <-- (engage module) : /autoware_state_machine/state
+
+(engage module) -> (/go_interface) : req_change_lock_flg
+(engage module) <-- (/go_interface) : api_vehicle_status
+
+(cargo_loading_service) <-- (in_parking_module) : /in_parking/state\nSrvice:/in_parking/task
+(cargo_loading_service) .-> (in_parking_module) : " "
+
+
+(in_parking_module) --> (engage module) : /in_parkinge/set/auto_engage
+
+(v2i control module) <-- (autonomus module)  : /awapi/tmp/infrastructure_commands
+(v2i control module) --> (autonomus module)  : /system/v2x/virtual_traffic_light_states
+
+
+(autonomus module) <--- (engage module) : Service:\n/api/autoware/set/engage\n/api/autoware/set/start_request
+(autonomus module) .--> (engage module) 
+
+(autonomus module) --> (hmi control module) : /awapi/vehicle/get/status
+
+(FMS) -> (DeliveryApp)
+(FMS) <- (DeliveryApp)
+(FMS) --> (Agent)
+(FMS) <-- (Agent)
+(Agent) -> (/go_interface) : /webauto/vehicle_info
+(DeliveryApp) -->  (/go_interface) : result of GET API
+(DeliveryApp) <-- (/go_interface) : request of GET API\nrequest of PATCH API
+
+(hmi control module) <-- (engage module) : /autoware_state_machine/state
+
+(hmi control module) --> (HMI devices)
+(hmi control module)--> (shutdown_manager)
+
+(autonomus module) --> (engage module) : /awapi/autoware/get/status\n/awapi/vehicle/get/status
+
+@enduml
