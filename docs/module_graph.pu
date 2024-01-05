@@ -25,6 +25,10 @@ rectangle "cargo loading management function"{
   usecase "cargo_loading_service"  #LightCoral
 }
 
+rectangle "Recovery Emergency function"{
+  usecase "recovery emergency module"
+}
+
 rectangle "ondemand delivery reservation function" {
   rectangle "web.auto" {
     cloud "FMS (Fleet management system)" as FMS
@@ -71,7 +75,8 @@ rectangle "hmi control function" {
 
 (v2i control module) <-- (autonomus module)  : /awapi/tmp/infrastructure_commands
 (v2i control module) --> (autonomus module)  : /system/v2x/virtual_traffic_light_states
-
+(recovery emergency module) --> (autonomus module)
+(recovery emergency module) <-- (autonomus module)
 
 (autonomus module) <--- (engage module) : Service:\n/api/autoware/set/engage\n/api/autoware/set/start_request
 (autonomus module) .--> (engage module) 
