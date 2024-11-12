@@ -70,7 +70,9 @@
       <arg name="operation_mode" value="$(var operation_mode_v2i_infra)" />
     </include>
   </group>
-
+  <group>
+    <include file="$(find-pkg-share status_display_manager)/launch/status_display_manager.launch.xml" />
+  </group>
   <group>
     <include file="$(find-pkg-share warning_lamp_manager)/launch/warning_lamp_manager.launch.xml">
       <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)" />

@@ -1,5 +1,7 @@
 @startuml
 rectangle "autoware" {
+  usecase "/system_error_monitor"
+  usecase "/g30esli_interface_awiv_adapt_receiver"
   usecase "/awapi/awapi_awiv_adapter_node"
   usecase "/control/vehicle_cmd_gate"
 }
@@ -33,6 +35,7 @@ rectangle "ondemand delivery reservation function" {
 usecase "/autoware_state_machine" #LightCoral
 
 rectangle "hmi control function" {
+  usecase "/status_display_manager" #LightCoral
   usecase "/ad_sound_manager" #LightCoral
   usecase "/sound_voice_alarm/audio_driver" #LightCoral
   usecase "/sound_bgm/audio_driver" #LightCoral
@@ -147,5 +150,10 @@ rectangle "hmi control function" {
 (/dio_ros_driver) <-- (delivery_reservation_button)
 
 (/awapi/awapi_awiv_adapter_node) --> (/autoware_state_machine) : /awapi/autoware/get/status\n/awapi/vehicle/get/status
+
+(/autoware_state_machine) --> (/status_display_manager) : /autoware_state_machine/state
+(/system_error_monitor) --> (/status_display_manager) : /diagnostics_err
+(/g30esli_interface_awiv_adapt_receiver) --> (/status_display_manager) : /vehicle/status/turn_indicators_status
+(/status_display_manager) --> (/dio_ros_driver) : /status_display_manager/state
 
 @enduml
