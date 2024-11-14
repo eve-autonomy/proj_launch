@@ -44,6 +44,7 @@ rectangle "hmi control function" {
   usecase "/warning_lamp_manager" #LightCoral
   usecase "/button_output_selector" #LightCoral
   usecase "/shutdown_manager" #LightCoral
+  usecase "/departure_button_lamp_manager" #LightCoral
 
   usecase "/dio_ros_driver" as (/dio_ros_driver)
 
@@ -55,6 +56,7 @@ rectangle "hmi control function" {
     node "delivery_reservation_lamp"
     node "engage_button"
     node "delivery_reservation_button"
+    node "departure_button_lamp"
   }
 }
 
@@ -139,10 +141,15 @@ rectangle "hmi control function" {
 (/warning_lamp_manager) --> (/dio_ros_driver) : /dio/dout2
 (/warning_lamp_manager) --> (/dio_ros_driver) : /dio/dout1
 
+(/autoware_state_machine) --> (/departure_button_lamp_manager)
+(/shutdown_manager) --> (/departure_button_lamp_manager)
+(/departure_button_lamp_manager) --> (/dio_ros_driver) : /dio/dout4
+
 (/dio_ros_driver) --> (ad_status_lamp)
 (/dio_ros_driver) --> (warning_lamp)
 (/dio_ros_driver) --> (emergency_lamp)
 (/dio_ros_driver) --> (delivery_reservation_lamp)
+(/dio_ros_driver) --> (departure_button_lamp)
 (/dio_ros_driver) <-- (engage_button)
 (/dio_ros_driver) <-- (delivery_reservation_button)
 
