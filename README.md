@@ -20,6 +20,7 @@ Note: This package manages the red colored nodes.
       - [/ad_status_lamp_manager](https://github.com/eve-autonomy/ad_status_lamp_manager)
       - [/delivery_reservation_lamp_manager](https://github.com/eve-autonomy/delivery_reservation_lamp_manager)
       - [/warning_lamp_manager](https://github.com/eve-autonomy/warning_lamp_manager)
+      - [/departure_button_lamp_manager](https://github.com/eve-autonomy/departure_button_lamp_manager)
     - Button control:
       - [/button_manager](https://github.com/eve-autonomy/button_manager)
       - [/engage_srv_converter](https://github.com/eve-autonomy/engage_srv_converter)
