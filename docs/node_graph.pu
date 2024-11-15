@@ -142,7 +142,6 @@ rectangle "hmi control function" {
 (/warning_lamp_manager) --> (/dio_ros_driver) : /dio/dout1
 
 (/autoware_state_machine) --> (/departure_button_lamp_manager)
-(/shutdown_manager) --> (/departure_button_lamp_manager)
 (/departure_button_lamp_manager) --> (/dio_ros_driver) : /dio/dout4
 
 (/dio_ros_driver) --> (ad_status_lamp)
