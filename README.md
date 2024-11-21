@@ -25,6 +25,8 @@ Note: This package manages the red colored nodes.
       - [/button_manager](https://github.com/eve-autonomy/button_manager)
       - [/engage_srv_converter](https://github.com/eve-autonomy/engage_srv_converter)
       - [/button_output_selector](https://github.com/eve-autonomy/button_output_selector)
+    - Display control:
+      - [/status_display_manager](https://github.com/eve-autonomy/status_display_manager)
   - Reserved-delivery connection:
     - [/go_interface](https://github.com/eve-autonomy/go_interface)
   - V2I connection:
@@ -38,6 +40,8 @@ Note: This package manages the red colored nodes.
   - HMI control:
     - Sound control:
       - [audio_driver_msgs](https://github.com/eve-autonomy/audio_driver_msgs)
+    - Display control:
+      - [dio_ros_driver](https://github.com/tier4/dio_ros_driver)
   - Reserved-delivery connection:
     - [go_interface](https://github.com/eve-autonomy/go_interface)
   - Shutdown process management:
