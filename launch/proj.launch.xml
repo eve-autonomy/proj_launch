@@ -102,9 +102,7 @@
     <include file="$(find-pkg-share engage_srv_converter)/launch/engage_srv_converter.launch.xml" />
   </group>
   <group>
-    <include file="$(find-pkg-share autoware_state_machine)/launch/autoware_state_machine.launch.xml">
-      <arg name="use_overridable_vehicle" value="$(var use_overridable_vehicle)"/>
-    </include>
+    <include file="$(find-pkg-share eve_cmd_gate)/launch/eve_cmd_gate.launch.xml" />
   </group>
   <group>
     <include file="$(find-pkg-share button_output_selector)/launch/button_output_selector.launch.xml" />
